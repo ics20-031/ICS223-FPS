@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MouseLook : MonoBehaviour
 {
-    // Start is called before the first frame update
+
     public float sensitivityHoriz = 9.0f;
     public float sensitivityVert = 9.0f;
 
@@ -17,6 +17,8 @@ public class MouseLook : MonoBehaviour
     public float horizMove;
     public float vertMove;
 
+    CharacterController character;
+
     public enum RotationAxes
     {
         MouseXAndY,
@@ -26,7 +28,6 @@ public class MouseLook : MonoBehaviour
 
     void Start()
     {
-        
     }
 
     public RotationAxes axes = RotationAxes.MouseXAndY;
@@ -34,14 +35,13 @@ public class MouseLook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        horizMove = Input.GetAxis("Horizontal");
-        vertMove = Input.GetAxis("Vertical");
-        transform.Translate(new Vector3(horizMove, 0, vertMove) * Time.deltaTime * speed);
 
+        // camera rotation
         if (axes == RotationAxes.MouseX)
         {
             transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * sensitivityHoriz);
-        } else if (axes == RotationAxes.MouseY)
+        } 
+        else if (axes == RotationAxes.MouseY)
         {
             rotationX -= Input.GetAxis("Mouse Y") * sensitivityVert;
             rotationX = Mathf.Clamp(rotationX, minVert, maxVert);
