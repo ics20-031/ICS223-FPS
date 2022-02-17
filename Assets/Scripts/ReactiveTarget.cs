@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class ReactiveTarget : MonoBehaviour
 {
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -18,6 +19,11 @@ public class ReactiveTarget : MonoBehaviour
 
     public void ReactToHit()
     {
+        WanderingAI enemyAI = GetComponent<WanderingAI>();
+        if (enemyAI != null)
+        {
+            enemyAI.changeState(EnemyStates.dead);
+        }
         StartCoroutine(Die());
     }
 
