@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class SceneController : MonoBehaviour
 {
@@ -11,13 +12,30 @@ public class SceneController : MonoBehaviour
     private int enemyNumber = 3;
     private GameObject[] enemyArray;
 
-    private void Start()
+    private int clockTime = 10;
+    private Coroutine countingCoroutine; 
+
+    [SerializeField]
+    private TextMeshProUGUI countdown;
+
+    void Start()
     {
         enemyArray = new GameObject[enemyNumber];
+        countingCoroutine = StartCoroutine(Tick());
+    }
+
+    IEnumerator Tick()
+    {
+        countdown.text = clockTime.ToString();
+        for (int i = clockTime; i > 0; i--)
+        {
+            yield return new WaitForSeconds(1);
+            clockTime--;
+            countdown.text = clockTime.ToString();
+        }
     }
 
     // Update is called once per frame 
-
     void Update()
     {
         for (int i = 0; i < enemyArray.Length; i++)
@@ -31,5 +49,18 @@ public class SceneController : MonoBehaviour
                 enemyArray[i] = enemy;
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            if (countingCoroutine != null)
+            {
+                StopCoroutine(countingCoroutine);
+                countingCoroutine = null;
+            } else
+            {
+                countingCoroutine = StartCoroutine(Tick());
+            }
+        }
     }
+
 }
