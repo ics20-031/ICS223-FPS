@@ -7,6 +7,7 @@ public class SceneController : MonoBehaviour
 {
     [SerializeField]
     private GameObject enemyPrefab;
+
     private GameObject enemy;
     private Vector3 spawnPoint = new Vector3(0, 0, 5);
     private int enemyNumber = 3;
@@ -18,10 +19,29 @@ public class SceneController : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI countdown;
 
+    // iguanas
+    [SerializeField]
+    private GameObject iguana;
+    [SerializeField]
+    private Transform iguanaSpawn;
+    private int iguanaNumber = 10;
+    private GameObject[] iguanaArray;
+
     void Start()
     {
         enemyArray = new GameObject[enemyNumber];
         countingCoroutine = StartCoroutine(Tick());
+
+        // spawn the iguanas 
+        iguanaArray = new GameObject[iguanaNumber];
+        for (int i = 0; i < iguanaNumber; i++)
+        {
+            iguana = Instantiate(iguana) as GameObject;
+            iguana.transform.position = iguanaSpawn.position;
+            float angle = Random.Range(0, 360);
+            iguana.transform.Rotate(0, angle, 0);
+            iguanaArray[i] = iguana;
+        }
     }
 
     IEnumerator Tick()
