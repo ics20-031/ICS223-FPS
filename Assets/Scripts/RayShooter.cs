@@ -7,20 +7,21 @@ public class RayShooter : MonoBehaviour
     private Camera cam;
     [SerializeField]
     private int aimSize = 16;
+    public bool canShoot = true;
 
     // Start is called before the first frame update
     void Start()
     {
         cam = GetComponent<Camera>();
         // hide the mouse cursor 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && canShoot)
         {
             Vector3 point = new Vector3(cam.pixelWidth / 2, cam.pixelHeight / 2, 0);
             Ray ray = cam.ScreenPointToRay(point);
@@ -63,6 +64,6 @@ public class RayShooter : MonoBehaviour
         float posX = cam.pixelWidth / 2 - aimSize / 4;
         float posY = cam.pixelHeight / 2 - aimSize / 2;
 
-        GUI.Label(new Rect(posX, posY, aimSize, aimSize), "*", style);
+        //GUI.Label(new Rect(posX, posY, aimSize, aimSize), "*", style);
     }
 }
